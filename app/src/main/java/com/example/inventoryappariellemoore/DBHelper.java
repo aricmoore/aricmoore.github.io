@@ -6,13 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-/*
- * DBHelper: manages two tables
- * - users (id, username, password, sms_allowed)
- * - items (id, user_id, name, quantity)
- *
- * Simple, clear methods for user management and item CRUD.
- */
+// User authentication, SMS permissions, and item CRUD
 public class DBHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "inventory_app.db";
@@ -59,15 +53,14 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // For this project keep it simple: drop and recreate
+        // Drop and recreate tables on upgrade
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ITEMS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
         onCreate(db);
     }
 
-    // ---------- User methods ----------
+    // User methods
 
-    // Returns true if credentials match an existing user
     public boolean checkUserCredentials(String username, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.query(TABLE_USERS, new String[]{U_ID},
@@ -78,7 +71,6 @@ public class DBHelper extends SQLiteOpenHelper {
         return exists;
     }
 
-    // Create a new user; returns true if created, false if username already exists
     public boolean createUser(String username, String password) {
         if (getUserId(username) != -1) return false;
         SQLiteDatabase db = this.getWritableDatabase();
@@ -89,7 +81,6 @@ public class DBHelper extends SQLiteOpenHelper {
         return id != -1;
     }
 
-    // Get user id by username, -1 if not found
     public long getUserId(String username) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.query(TABLE_USERS, new String[]{U_ID},
@@ -103,7 +94,6 @@ public class DBHelper extends SQLiteOpenHelper {
         return -1;
     }
 
-    // Update sms_allowed for user
     public void setSmsAllowedForUser(String username, boolean allowed) {
         long id = getUserId(username);
         if (id == -1) return;
@@ -113,7 +103,6 @@ public class DBHelper extends SQLiteOpenHelper {
         db.update(TABLE_USERS, cv, U_ID + "=?", new String[]{String.valueOf(id)});
     }
 
-    // Check if user has sms_allowed flag in DB
     public boolean isSmsAllowed(String username) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.query(TABLE_USERS, new String[]{U_SMS_ALLOWED},
@@ -127,9 +116,8 @@ public class DBHelper extends SQLiteOpenHelper {
         return false;
     }
 
-    // ---------- Item methods ----------
+    // Item methods
 
-    // Insert a new item for a user
     public long insertItem(long userId, String name, int quantity) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -139,7 +127,6 @@ public class DBHelper extends SQLiteOpenHelper {
         return db.insert(TABLE_ITEMS, null, cv);
     }
 
-    // Update an existing item by id
     public int updateItem(long itemId, String name, int quantity) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -148,14 +135,11 @@ public class DBHelper extends SQLiteOpenHelper {
         return db.update(TABLE_ITEMS, cv, I_ID + "=?", new String[]{String.valueOf(itemId)});
     }
 
-    // Delete an item by id
     public int deleteItem(long itemId) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_ITEMS, I_ID + "=?", new String[]{String.valueOf(itemId)});
     }
 
-    // Fetch all items for a user. Caller must close the cursor if exposed; we'll return a Cursor-like wrapper as simple arrays.
-    // For simplicity here we return a 2D String array where each row is [id, name, quantity]
     public String[][] getItemsForUser(long userId) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.query(TABLE_ITEMS, new String[]{I_ID, I_NAME, I_QUANTITY},
@@ -172,5 +156,20 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         c.close();
         return items;
+    }
+
+    public long getItemId(long userId, String itemName) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.query(TABLE_ITEMS, new String[]{I_ID},
+                I_USER_ID + "=? AND " + I_NAME + "=?",
+                new String[]{String.valueOf(userId), itemName},
+                null, null, null);
+        if (c != null && c.moveToFirst()) {
+            long id = c.getLong(c.getColumnIndexOrThrow(I_ID));
+            c.close();
+            return id;
+        }
+        if (c != null) c.close();
+        return -1;
     }
 }

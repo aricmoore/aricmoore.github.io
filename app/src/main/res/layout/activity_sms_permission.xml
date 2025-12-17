@@ -2,10 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:padding="24dp"
+    android:gravity="center_horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center_horizontal">
+    android:layout_height="match_parent">
 
+    <!-- Permission message -->
     <TextView
         android:id="@+id/permissionText"
         android:layout_width="wrap_content"
@@ -15,6 +16,7 @@
         android:layout_marginBottom="32dp"
         android:gravity="center"/>
 
+    <!-- Allow SMS button -->
     <Button
         android:id="@+id/allowButton"
         android:layout_width="match_parent"
@@ -22,6 +24,7 @@
         android:text="@string/allow_button"
         android:layout_marginBottom="16dp"/>
 
+    <!-- Deny SMS button -->
     <Button
         android:id="@+id/denyButton"
         android:layout_width="match_parent"

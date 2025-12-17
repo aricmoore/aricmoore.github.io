@@ -14,6 +14,19 @@
         android:textStyle="bold"
         android:layout_marginBottom="16dp"/>
 
+    <EditText
+        android:id="@+id/itemNameField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Item Name"/>
+
+    <EditText
+        android:id="@+id/itemQuantityField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Quantity"
+        android:inputType="number"/>
+
     <Button
         android:id="@+id/addItemButton"
         android:layout_width="match_parent"

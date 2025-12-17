@@ -8,6 +8,20 @@
     <string name="create_account_button">Create Account</string>
     <string name="enter_username_password">Enter username and password</string>
     <string name="enter_username_create">Enter a username to create</string>
+    <string name="username_label">Username</string>
+    <string name="password_label">Password</string>
+    <string name="go_to_register">Create Account</string>
+
+    <!-- Register-->
+    <string name="register_button">Register</string>
+    <string name="register_username_label">New Username</string>
+    <string name="register_password_label">New Password</string>
+
+    <!-- Inventory -->
+    <string name="add_item_button">Add Item</string>
+    <string name="new_item_name_hint">Item name</string>
+    <string name="new_item_qty_hint">Qty</string>
+    <string name="sms_alert_button">Enable SMS Alerts</string>
 
     <!-- Activity SMS Permission -->
     <string name="permission_message">This app would like to send you SMS notifications. Would you like to allow it?</string>
@@ -15,9 +29,11 @@
     <string name="deny_button">Deny</string>
     <string name="permission_granted">Permission Granted</string>
     <string name="permission_denied">Permission Denied</string>
+    <string name="sms_permission_header">Allow SMS Notifications?</string>
+    <string name="allow_sms_button">Enable SMS</string>
 
     <!-- Activity Item Management -->
-    <string name="item_name_label">Item Name</string>
+    <string name="item_name_label">Item</string>
     <string name="quantity_hint">Quantity</string>
     <string name="save_button">Save</string>
 
@@ -26,6 +42,5 @@
     <string name="delete_button">Delete</string>
 
     <!-- Activity Dashboard -->
-    <string name="add_item_button">Add Item</string>
     <string name="welcome_message">Welcome, %1$s!</string>
 </resources>

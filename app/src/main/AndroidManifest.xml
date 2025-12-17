@@ -2,11 +2,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.inventoryappariellemoore">
 
+    <!-- Runtime permission is still required inside code -->
+    <uses-permission android:name="android.permission.SEND_SMS" />
+
+    <!-- Prevents “Permission exists without corresponding hardware” warning -->
+    <uses-feature android:name="android.hardware.telephony" android:required="false" />
+
     <application
         android:allowBackup="true"
-        android:label="InventoryApp"
+        android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        android:theme="@style/Theme.InventoryAppArielleMoore">
 
         <!-- Launcher/Login Activity -->
         <activity
@@ -28,11 +34,13 @@
             android:name=".ItemManagementActivity"
             android:exported="false"/>
 
-        <!-- SMS Permission Activity-->
+        <!-- SMS Permission Activity -->
         <activity
             android:name=".SmsPermissionActivity"
             android:exported="false"/>
 
-    </application>
+        <!-- Register Activity -->
+        <activity android:name=".RegisterActivity"/>
 
+    </application>
 </manifest>

@@ -2,32 +2,41 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:padding="24dp"
+    android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- Item Name -->
     <EditText
         android:id="@+id/itemNameText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/item_name_label"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="16dp"
-        android:inputType="textPersonName"
-        android:autofillHints="name"/>
+        android:textSize="16sp"
+        android:layout_marginBottom="16dp"/>
 
+    <!-- Item Quantity -->
     <EditText
         android:id="@+id/itemQuantityEdit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/quantity_hint"
         android:inputType="number"
-        android:autofillHints="none"/>
+        android:textSize="16sp"
+        android:layout_marginBottom="24dp"/>
 
+    <!-- Save Button -->
     <Button
         android:id="@+id/saveButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/save_button"
-        android:layout_marginTop="24dp"/>
+        android:layout_marginBottom="12dp"/>
+
+    <!-- Cancel Button -->
+    <Button
+        android:id="@+id/cancelButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cancel"/>
 </LinearLayout>
