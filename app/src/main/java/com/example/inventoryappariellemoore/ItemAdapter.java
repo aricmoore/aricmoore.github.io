@@ -8,65 +8,89 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+/**
+ * Enhanced ItemAdapter demonstrating algorithms and data structure skills:
+ * - Uses List<InventoryItem> instead of String[][]
+ * - Efficient deletion via notifyDataSetChanged()
+ * - Now supports sorting and filtering
+ */
 public class ItemAdapter extends BaseAdapter {
 
     private final Context context;
-    private final String[][] items;
+    private final List<InventoryItem> items;
     private final DBHelper db;
-    private long userId;
 
-    public ItemAdapter(Context context, String[][] items, DBHelper db) {
+    public ItemAdapter(Context context, List<InventoryItem> items, DBHelper db) {
         this.context = context;
         this.items = items;
         this.db = db;
     }
 
-    public void setUserId(long id) {
-        this.userId = id;
-    }
-
     @Override
     public int getCount() {
-        return items.length;
+        return items.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return items[position];
+        return items.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return Long.parseLong(items[position][0]); // item id
+        return items.get(position).id;
     }
 
     @Override
     public View getView(int pos, View convertView, ViewGroup parent) {
-        View row;
-        if (convertView == null) {
-            row = LayoutInflater.from(context).inflate(R.layout.inventory_row, parent, false);
-        } else {
-            row = convertView;
-        }
+        View row = convertView != null ? convertView :
+                LayoutInflater.from(context).inflate(R.layout.inventory_row, parent, false);
 
-        String id = items[pos][0];
-        String name = items[pos][1];
-        String qty = items[pos][2];
+        InventoryItem item = items.get(pos);
 
         TextView nameView = row.findViewById(R.id.itemNameText);
         TextView qtyView = row.findViewById(R.id.itemQuantityText);
         Button deleteBtn = row.findViewById(R.id.deleteButton);
 
-        nameView.setText(name);
-        qtyView.setText(qty);
+        nameView.setText(item.name);
+        qtyView.setText(String.valueOf(item.quantity));
+        qtyView.setTextColor(item.quantity == 0 ? 0xFFFF0000 : 0xFF000000); // Red if zero
 
-        // Delete button inside each row
+        // Removes item and notify adapter
         deleteBtn.setOnClickListener(v -> {
-            db.deleteItem(Long.parseLong(id));
-            // Very simple refresh approach: reload InventoryActivity
-            ((DashboardActivity) context).recreate();
+            db.deleteItem(item.id);
+            items.remove(item);
+            notifyDataSetChanged();
         });
 
         return row;
+    }
+
+    // Sorts items alphabetically by name
+    public void sortByName() {
+        Collections.sort(items, Comparator.comparing(i -> i.name.toLowerCase()));
+        notifyDataSetChanged();
+    }
+
+    // Sorts items by quantity (ascending)
+    public void sortByQuantity() {
+        Collections.sort(items, Comparator.comparingInt(i -> i.quantity));
+        notifyDataSetChanged();
+    }
+
+    // Filters items with quantity <= threshold
+    public void filterLowStock(int threshold) {
+        List<InventoryItem> filtered = new ArrayList<>();
+        for (InventoryItem item : items) {
+            if (item.quantity <= threshold) filtered.add(item);
+        }
+        items.clear();
+        items.addAll(filtered);
+        notifyDataSetChanged();
     }
 }
