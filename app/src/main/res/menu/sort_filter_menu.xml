@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Sorts items alphabetically by name -->
+    <item
+        android:id="@+id/sort_name"
+        android:title="Sort by Name" />
+
+    <!-- Sorts items by quantity (ascending) -->
+    <item
+        android:id="@+id/sort_quantity"
+        android:title="Sort by Quantity" />
+
+    <!-- Filters items with low stock -->
+    <item
+        android:id="@+id/filter_low_stock"
+        android:title="Filter Low Stock" />
+
+    <!-- Shows all items again after filtering -->
+    <item
+        android:id="@+id/show_all"
+        android:title="Show All Items" />
+
+</menu>

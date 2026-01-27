@@ -1,24 +1,29 @@
 package com.example.inventoryappariellemoore;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
-import java.util.ArrayList;
 
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * DashboardActivity using the newly-enhanced ItemAdapter
+ * Now supports adding, deleting, editing, sorting, and filtering inventory items
+ */
 public class DashboardActivity extends AppCompatActivity {
 
-    ListView inventoryGrid;
-    ArrayList<InventoryItem> items;
-    InventoryAdapter adapter;
-    TextView welcomeText;
-    EditText itemNameField, itemQuantityField;
-    Button addItemButton;
-    DBHelper dbHelper;
-    long userId;
-    String username;
+    private ListView inventoryGrid;
+    private List<InventoryItem> items;
+    private ItemAdapter adapter;
+    private TextView welcomeText;
+    private EditText itemNameField, itemQuantityField;
+    private Button addItemButton;
+    private DBHelper dbHelper;
+    private long userId;
+    private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +32,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         dbHelper = new DBHelper(this);
 
+        // Binds UI elements
         welcomeText = findViewById(R.id.welcomeText);
         inventoryGrid = findViewById(R.id.inventoryGrid);
         itemNameField = findViewById(R.id.itemNameField);
@@ -37,40 +43,79 @@ public class DashboardActivity extends AppCompatActivity {
         welcomeText.setText(getString(R.string.welcome_message, username));
         userId = dbHelper.getUserId(username);
 
+        // Loads items from DB
         loadItems();
 
-        adapter = new InventoryAdapter();
+        // Initialises adapter
+        adapter = new ItemAdapter(this, items, dbHelper);
         inventoryGrid.setAdapter(adapter);
 
-        // Adds inline item from the dashboard
-        addItemButton.setOnClickListener(v -> {
-            String name = itemNameField.getText().toString().trim();
-            String qtyStr = itemQuantityField.getText().toString().trim();
-            if (name.isEmpty()) {
-                Toast.makeText(this, "Item name cannot be empty", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            int quantity = 0;
-            try { quantity = Integer.parseInt(qtyStr); } catch(NumberFormatException e){ quantity = 0; }
+        // Adds a new item
+        addItemButton.setOnClickListener(v -> addItem());
 
-            long id = dbHelper.insertItem(userId, name, quantity);
-            items.add(new InventoryItem(id, name, quantity));
-            adapter.notifyDataSetChanged();
-
-            // Clears fields after adding (check that this is implemented on all input fields)
-            itemNameField.setText("");
-            itemQuantityField.setText("");
-
-            if (quantity == 0) Toast.makeText(this, "Warning: quantity is zero", Toast.LENGTH_SHORT).show();
+        // Long-press menu for sorting/filtering
+        inventoryGrid.setOnItemLongClickListener((parent, view, position, id) -> {
+            showSortFilterMenu();
+            return true;
         });
     }
 
-    private void loadItems(){
+    private void loadItems() {
         items = new ArrayList<>();
         String[][] dbItems = dbHelper.getItemsForUser(userId);
-        for(String[] row : dbItems){
-            items.add(new InventoryItem(Long.parseLong(row[0]), row[1], Integer.parseInt(row[2])));
+        for (String[] row : dbItems) {
+            items.add(new InventoryItem(
+                    Long.parseLong(row[0]),
+                    row[1],
+                    Integer.parseInt(row[2])
+            ));
         }
+    }
+
+    private void addItem() {
+        String name = itemNameField.getText().toString().trim();
+        String qtyStr = itemQuantityField.getText().toString().trim();
+
+        if (name.isEmpty()) {
+            Toast.makeText(this, "Item name cannot be empty", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        int quantity = 0;
+        try { quantity = Integer.parseInt(qtyStr); } catch(NumberFormatException ignored) {}
+
+        long id = dbHelper.insertItem(userId, name, quantity);
+        items.add(new InventoryItem(id, name, quantity));
+        adapter.notifyDataSetChanged();
+
+        itemNameField.setText("");
+        itemQuantityField.setText("");
+
+        if (quantity == 0) Toast.makeText(this, "Warning: quantity is zero", Toast.LENGTH_SHORT).show();
+    }
+
+    private void showSortFilterMenu() {
+        PopupMenu popup = new PopupMenu(this, inventoryGrid);
+        popup.getMenuInflater().inflate(R.menu.sort_filter_menu, popup.getMenu());
+
+        popup.setOnMenuItemClickListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.sort_name) {
+                adapter.sortByName();
+            } else if (id == R.id.sort_quantity) {
+                adapter.sortByQuantity();
+            } else if (id == R.id.filter_low_stock) {
+                adapter.filterLowStock(5); // example threshold
+            } else if (id == R.id.show_all) {
+                loadItems();
+                adapter.notifyDataSetChanged();
+            } else {
+                return false;
+            }
+            return true;
+        });
+
+        popup.show();
     }
 
     @Override
@@ -91,54 +136,6 @@ public class DashboardActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    // Adapter for ListView
-    private class InventoryAdapter extends BaseAdapter {
-
-        @Override
-        public int getCount() { return items.size(); }
-
-        @Override
-        public Object getItem(int position) { return items.get(position); }
-
-        @Override
-        public long getItemId(int position) { return items.get(position).id; }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent){
-            View rowView = convertView;
-            if(rowView == null){
-                rowView = getLayoutInflater().inflate(R.layout.inventory_row, parent, false);
-            }
-
-            TextView itemNameText = rowView.findViewById(R.id.itemNameText);
-            TextView itemQuantityText = rowView.findViewById(R.id.itemQuantityText);
-            Button deleteButton = rowView.findViewById(R.id.deleteButton);
-
-            InventoryItem item = items.get(position);
-            itemNameText.setText(item.name);
-            itemQuantityText.setText(String.valueOf(item.quantity));
-            itemQuantityText.setTextColor(item.quantity == 0 ? Color.RED : Color.BLACK);
-
-            deleteButton.setOnClickListener(v -> {
-                dbHelper.deleteItem(item.id);
-                items.remove(position);
-                notifyDataSetChanged();
-            });
-
-            rowView.setOnClickListener(v -> {
-                // Open edit screen
-                Intent intent = new Intent(DashboardActivity.this, ItemManagementActivity.class);
-                intent.putExtra("itemId", item.id);
-                intent.putExtra("itemName", item.name);
-                intent.putExtra("itemQuantity", item.quantity);
-                intent.putExtra("username", username);   // ← REQUIRED
-                startActivityForResult(intent, 1);
-            });
-
-            return rowView;
-        }
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
@@ -148,10 +145,10 @@ public class DashboardActivity extends AppCompatActivity {
             String name = data.getStringExtra("itemName");
             int quantity = data.getIntExtra("itemQuantity", 0);
 
-            for(int i=0;i<items.size();i++){
-                if(items.get(i).id == id){
-                    items.get(i).name = name;
-                    items.get(i).quantity = quantity;
+            for (InventoryItem item : items) {
+                if(item.id == id){
+                    item.name = name;
+                    item.quantity = quantity;
                     adapter.notifyDataSetChanged();
                     return;
                 }
