@@ -6,7 +6,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-// User authentication, SMS permissions, and item CRUD
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * DBHelper manages SQLite database operations.
+ * Updated to return List<InventoryItem> instead of String[][] for all item retrieval methods (Enhancement 3).
+ */
 public class DBHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "inventory_app.db";
@@ -32,20 +39,20 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createUsers = "CREATE TABLE " + TABLE_USERS + " ("
-                + U_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + U_USERNAME + " TEXT UNIQUE NOT NULL, "
-                + U_PASSWORD + " TEXT NOT NULL, "
-                + U_SMS_ALLOWED + " INTEGER DEFAULT 0"
-                + ");";
+        String createUsers = "CREATE TABLE " + TABLE_USERS + " (" +
+                U_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                U_USERNAME + " TEXT UNIQUE NOT NULL, " +
+                U_PASSWORD + " TEXT NOT NULL, " +
+                U_SMS_ALLOWED + " INTEGER DEFAULT 0" +
+                ");";
 
-        String createItems = "CREATE TABLE " + TABLE_ITEMS + " ("
-                + I_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + I_USER_ID + " INTEGER NOT NULL, "
-                + I_NAME + " TEXT NOT NULL, "
-                + I_QUANTITY + " INTEGER DEFAULT 0, "
-                + "FOREIGN KEY(" + I_USER_ID + ") REFERENCES " + TABLE_USERS + "(" + U_ID + ")"
-                + ");";
+        String createItems = "CREATE TABLE " + TABLE_ITEMS + " (" +
+                I_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                I_USER_ID + " INTEGER NOT NULL, " +
+                I_NAME + " TEXT NOT NULL, " +
+                I_QUANTITY + " INTEGER DEFAULT 0, " +
+                "FOREIGN KEY(" + I_USER_ID + ") REFERENCES " + TABLE_USERS + "(" + U_ID + ")" +
+                ");";
 
         db.execSQL(createUsers);
         db.execSQL(createItems);
@@ -53,14 +60,12 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Drop and recreate tables on upgrade
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ITEMS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
         onCreate(db);
     }
 
     // User methods
-
     public boolean checkUserCredentials(String username, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.query(TABLE_USERS, new String[]{U_ID},
@@ -117,7 +122,6 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     // Item methods
-
     public long insertItem(long userId, String name, int quantity) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -140,36 +144,93 @@ public class DBHelper extends SQLiteOpenHelper {
         return db.delete(TABLE_ITEMS, I_ID + "=?", new String[]{String.valueOf(itemId)});
     }
 
-    public String[][] getItemsForUser(long userId) {
+    public List<InventoryItem> getItemsForUser(long userId) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.query(TABLE_ITEMS, new String[]{I_ID, I_NAME, I_QUANTITY},
                 I_USER_ID + "=?", new String[]{String.valueOf(userId)}, null, null, I_NAME + " ASC");
-        if (c == null) return new String[0][0];
-        int count = c.getCount();
-        String[][] items = new String[count][3];
-        int i = 0;
-        while (c.moveToNext()) {
-            items[i][0] = String.valueOf(c.getLong(c.getColumnIndexOrThrow(I_ID)));
-            items[i][1] = c.getString(c.getColumnIndexOrThrow(I_NAME));
-            items[i][2] = String.valueOf(c.getInt(c.getColumnIndexOrThrow(I_QUANTITY)));
-            i++;
+
+        List<InventoryItem> items = new ArrayList<>();
+        if (c != null) {
+            while (c.moveToNext()) {
+                items.add(new InventoryItem(
+                        c.getLong(c.getColumnIndexOrThrow(I_ID)),
+                        c.getString(c.getColumnIndexOrThrow(I_NAME)),
+                        c.getInt(c.getColumnIndexOrThrow(I_QUANTITY))
+                ));
+            }
+            c.close();
         }
-        c.close();
         return items;
     }
 
-    public long getItemId(long userId, String itemName) {
+    // Search and filtering methods
+    public List<InventoryItem> getItemsByQuantityRange(long userId, int min, int max) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = db.query(TABLE_ITEMS, new String[]{I_ID},
-                I_USER_ID + "=? AND " + I_NAME + "=?",
-                new String[]{String.valueOf(userId), itemName},
-                null, null, null);
-        if (c != null && c.moveToFirst()) {
-            long id = c.getLong(c.getColumnIndexOrThrow(I_ID));
+        Cursor c = db.query(TABLE_ITEMS, new String[]{I_ID, I_NAME, I_QUANTITY},
+                I_USER_ID + "=? AND " + I_QUANTITY + " BETWEEN ? AND ?",
+                new String[]{String.valueOf(userId), String.valueOf(min), String.valueOf(max)},
+                null, null, I_NAME + " ASC");
+
+        List<InventoryItem> filtered = new ArrayList<>();
+        if (c != null) {
+            while (c.moveToNext()) {
+                filtered.add(new InventoryItem(
+                        c.getLong(c.getColumnIndexOrThrow(I_ID)),
+                        c.getString(c.getColumnIndexOrThrow(I_NAME)),
+                        c.getInt(c.getColumnIndexOrThrow(I_QUANTITY))
+                ));
+            }
             c.close();
-            return id;
         }
-        if (c != null) c.close();
-        return -1;
+        return filtered;
+    }
+
+    public List<InventoryItem> searchItemsByName(long userId, String query) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.query(TABLE_ITEMS, new String[]{I_ID, I_NAME, I_QUANTITY},
+                I_USER_ID + "=? AND " + I_NAME + " LIKE ?",
+                new String[]{String.valueOf(userId), "%" + query + "%"},
+                null, null, I_NAME + " ASC");
+
+        List<InventoryItem> results = new ArrayList<>();
+        if (c != null) {
+            while (c.moveToNext()) {
+                results.add(new InventoryItem(
+                        c.getLong(c.getColumnIndexOrThrow(I_ID)),
+                        c.getString(c.getColumnIndexOrThrow(I_NAME)),
+                        c.getInt(c.getColumnIndexOrThrow(I_QUANTITY))
+                ));
+            }
+            c.close();
+        }
+        return results;
+    }
+
+    public void deleteUser(long userId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
+        try {
+            // Cascade delete all items first
+            db.delete(TABLE_ITEMS, I_USER_ID + "=?", new String[]{String.valueOf(userId)});
+            db.delete(TABLE_USERS, U_ID + "=?", new String[]{String.valueOf(userId)});
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
+    }
+
+    public void batchUpdateQuantities(Map<Long, Integer> updates) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
+        try {
+            for (Map.Entry<Long, Integer> entry : updates.entrySet()) {
+                ContentValues cv = new ContentValues();
+                cv.put(I_QUANTITY, entry.getValue());
+                db.update(TABLE_ITEMS, cv, I_ID + "=?", new String[]{String.valueOf(entry.getKey())});
+            }
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
     }
 }

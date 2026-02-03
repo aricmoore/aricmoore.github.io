@@ -66,11 +66,8 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     private void loadItems(){
-        items = new ArrayList<>();
-        String[][] dbItems = dbHelper.getItemsForUser(userId);
-        for(String[] row : dbItems){
-            items.add(new InventoryItem(Long.parseLong(row[0]), row[1], Integer.parseInt(row[2])));
-        }
+        // Get items as List<InventoryItem> directly
+        items = new ArrayList<>(dbHelper.getItemsForUser(userId));
     }
 
     @Override
