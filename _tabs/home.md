@@ -25,7 +25,7 @@ order: 1
 }
 </style>
 
-# Welcome to My ePortfolio!
+# Welcome to My ePortfolio! {#top}
 
 ---
 
@@ -100,3 +100,29 @@ Thanks for stopping by! Feel free to reach out with any questions or feedback.
   </div>
 
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const navItems = document.querySelectorAll('.nav-item');
+  const links = document.querySelectorAll('.nav-item a');
+  const sections = Array.from(document.querySelectorAll('h2[id], h3[id]'));
+  
+  function updateActive() {
+    const scrollPos = window.scrollY + window.innerHeight / 3;
+
+    let activeId = "top"; // default Home
+    for (let sec of sections) {
+      if (sec.offsetTop <= scrollPos) {
+        activeId = sec.id;
+      }
+    }
+
+    navItems.forEach(li => li.classList.remove('active'));
+    const activeLink = document.querySelector(`.nav-link[href="#${activeId}"]`);
+    if (activeLink) activeLink.parentElement.classList.add('active');
+  }
+
+  window.addEventListener('scroll', updateActive);
+  updateActive(); // run on page load
+});
+</script>
