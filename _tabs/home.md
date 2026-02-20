@@ -48,7 +48,7 @@ order: 1
 </p>
 
 <p style="text-indent: 2em;">
-	This program has reinforced my professional values: prioritizing thoughtful design over quick fixes, treating testing as an essential safeguard rather than a postscript, and recognizing security and data integrity as fundamental responsibilities. It has also strengthened my confidence in translating theoretical knowledge into enterprise practice. I regard graduation not as a conclusion, but as formal recognition of competencies that I will continue to cultivate throughout my career. As I move forward, I intend to construct scalable and responsible systems while contributing meaningfully to the teams and organisations I serve. This portfolio reflects not only what I have built, but also the reasoning that underpins it, and the trajectory along which I will continue to develop as a computer science professional.
+	This program has reinforced my professional values: prioritizing thoughtful design over quick fixes, treating testing as an essential safeguard rather than a postscript, and recognizing security and data integrity as fundamental responsibilities. It has also strengthened my confidence in translating theoretical knowledge into enterprise practice. I regard graduation not as a conclusion, but as formal recognition of competencies that I will continue to cultivate throughout my career. As I move forward, I intend to construct scalable and responsible systems while contributing meaningfully to the teams and organizations I serve. This portfolio reflects not only what I have built, but also the reasoning that underpins it, and the trajectory along which I will continue to develop as a computer science professional.
 </p>
 
 Thanks for stopping by! Feel free to reach out with any questions or feedback.
@@ -60,10 +60,14 @@ Thanks for stopping by! Feel free to reach out with any questions or feedback.
 <div class="artifact-card">
   <p>This is a demonstration of an informal code review process that highlights potential enhancements prior to the implementation stage.</p>
 
-  <video width="640" height="360" controls>
-    <source src="/assets/video/code-review.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
+  <div style="position: relative; padding-bottom: 56.25%; height: 0;">
+    <iframe
+      src="https://drive.google.com/file/d/1YoPoGk8B1ZTV-GxipBgfVZoQIECFfUIq/preview"
+      style="position: absolute; top:0; left:0; width:100%; height:100%;"
+      allow="autoplay"
+      allowfullscreen>
+    </iframe>
+	</div>
 
   <p><em>Click play to watch the video.</em></p>
 </div>

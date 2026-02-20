@@ -28,7 +28,10 @@ package-lock.json
 *.swp
 .DS_Store
 
-# Misc
+# Video (JIC)
+assets/video/*.mp4
+
+# Miscellaneous
 _sass/vendors
 assets/js/dist
 *.log

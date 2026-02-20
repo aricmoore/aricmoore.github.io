@@ -58,7 +58,7 @@ Improved database performance and organization.
 - Jekyll, Liquid Templates
 - HTML, CSS, Bootstrap
 - JavaScript
-- Git & GitHub
+- Git and GitHub
 
 ---
 
