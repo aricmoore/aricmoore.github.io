@@ -25,23 +25,32 @@ order: 1
 }
 
 /* Sidebar links */
+/* Base style */
 .nav-link {
   color: #333;
   font-weight: normal;
+  text-decoration: none;
   transition: color 0.2s, font-weight 0.2s;
-  text-decoration: none; /* optional */
 }
 
-/* Hover effect only */
+/* Highlight only on hover */
 .nav-link:hover {
+  color: #007bff;       /* blue highlight */
   font-weight: bold;
-  color: #007bff;
 }
 
-/* Disable "active" styles completely */
-.nav-item.active .nav-link {
-  font-weight: normal !important;
-  color: #333 !important;
+/* Remove active/visited styling after click */
+.nav-link:visited,
+.nav-link:focus,
+.nav-link:active {
+  color: #333;           /* back to normal */
+  font-weight: normal;
+}
+
+	/* Smooth color transition for Firefox */
+	.nav-link:focus-visible {
+		outline: none;         /* remove default focus outline */
+	}
 }
 </style>
 
