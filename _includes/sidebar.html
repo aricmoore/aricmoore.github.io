@@ -18,7 +18,7 @@
     <ul class="nav">
       <!-- Home -->
       <li class="nav-item{% if page.url == '/' %} active{% endif %}">
-        <a href="#top" class="nav-link">
+        <a href="{{ '/' | relative_url }}" class="nav-link">
           <i class="fa-fw fas fa-home"></i>
           <span>HOME</span>
         </a>

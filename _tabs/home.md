@@ -23,9 +23,29 @@ order: 1
 #breadcrumb {
   display: none;
 }
+
+/* Sidebar links */
+.nav-link {
+  color: #333;
+  font-weight: normal;
+  transition: color 0.2s, font-weight 0.2s;
+  text-decoration: none; /* optional */
+}
+
+/* Hover effect only */
+.nav-link:hover {
+  font-weight: bold;
+  color: #007bff;
+}
+
+/* Disable "active" styles completely */
+.nav-item.active .nav-link {
+  font-weight: normal !important;
+  color: #333 !important;
+}
 </style>
 
-# Welcome to My ePortfolio! {#top}
+# Welcome to My ePortfolio!
 
 ---
 
