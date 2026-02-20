@@ -1,43 +1,85 @@
-# Chirpy Starter
+# CS 499: Capstone ePortfolio
 
-[![Gem Version](https://img.shields.io/gem/v/jekyll-theme-chirpy)][gem]&nbsp;
-[![GitHub license](https://img.shields.io/github/license/cotes2020/chirpy-starter.svg?color=blue)][mit]
+Arielle Moore
+<br>
+Bachelor of Science in Computer Science
+<br>
+Southern Hew Hampshire University
 
-When installing the [**Chirpy**][chirpy] theme through [RubyGems.org][gem], Jekyll can only read files in the folders
-`_data`, `_layouts`, `_includes`, `_sass` and `assets`, as well as a small part of options of the `_config.yml` file
-from the theme's gem. If you have ever installed this theme gem, you can use the command
-`bundle info --path jekyll-theme-chirpy` to locate these files.
+---
 
-The Jekyll team claims that this is to leave the ball in the user’s court, but this also results in users not being
-able to enjoy the out-of-the-box experience when using feature-rich themes.
+1. [Live ePortfolio](#live-eportfolio)
+2. [Project Description](#project-description)
+3. [Code Artifacts and Enhancements](#code-artifacts-and-enhancements)
+4. [Technologies Used](#technologies-used)
+5. [Contact](#contact)
+6. [Acknowledgements](#acknowledgements)
 
-To fully use all the features of **Chirpy**, you need to copy the other critical files from the theme's gem to your
-Jekyll site. The following is a list of targets:
+---
 
-```shell
-.
-├── _config.yml
-├── _plugins
-├── _tabs
-└── index.html
-```
+## Live ePortfolio
 
-To save you time, and also in case you lose some files while copying, we extract those files/configurations of the
-latest version of the **Chirpy** theme and the [CD][CD] workflow to here, so that you can start writing in minutes.
+[Visit the live site →](https://aricmoore.github.io/)
 
-## Usage
+---
 
-Check out the [theme's docs](https://github.com/cotes2020/jekyll-theme-chirpy/wiki).
+## Project Description
 
-## Contributing
+This capstone project is an interactive ePortfolio built with Jekyll and a custom sidebar, demonstrating skills across fullstack software design, algorithms, and database management. It includes a home page with sections including my professional self-assessment, code review, and artifact enhancements.
 
-This repository is automatically updated with new releases from the theme repository. If you encounter any issues or want to contribute to its improvement, please visit the [theme repository][chirpy] to provide feedback.
+The artifacts selected for all three enhancements originate from my Inventory Application developed in CS 360: Mobile Architecture and Programming. The app as a whole acts as an inventory management solution that allows users to create, update, and track item quantities, and optionally receive SMS alerts for when items are out-of-stock.
 
-## License
+<sub>[Take me to the top](#cs-499-capstone-eportfolio)</sub>
 
-This work is published under [MIT][mit] License.
+---
 
-[gem]: https://rubygems.org/gems/jekyll-theme-chirpy
-[chirpy]: https://github.com/cotes2020/jekyll-theme-chirpy/
-[CD]: https://en.wikipedia.org/wiki/Continuous_deployment
-[mit]: https://github.com/cotes2020/chirpy-starter/blob/master/LICENSE
+## Code Artifacts and Enhancements
+
+**Enhancement One: Software Design and Engineering**
+<br>
+Implemented robust software design principles.
+[View Repository →](https://github.com/aricmoore/Enhancement-One-Design)
+
+**Enhancement Two: Algorithms and Data Structures**
+<br>
+Optimized algorithms and data structures.
+[View Repository →](https://github.com/aricmoore/Enhancement-Two-Design)
+
+**Enhancement Three: Databases**
+<br>
+Improved database performance and organization.
+[View Repository →](https://github.com/aricmoore/Enhancement-Three-Design)
+
+<sub>[Take me to the top](#cs-499-capstone-eportfolio)</sub>
+
+---
+
+## Technologies Used
+- Jekyll, Liquid Templates
+- HTML, CSS, Bootstrap
+- JavaScript
+- Git & GitHub
+
+---
+
+## Contact
+- [GitHub](https://github.com/aricmoore)
+- [LinkedIn](https://www.linkedin.com/in/ariellemoore/)
+- [Email](mailto:ari.moore.rl@gmail.com)
+
+<sub>[Take me to the top](#cs-499-capstone-eportfolio)</sub>
+
+---
+
+## Acknowledgements
+Firstly, a huge thank you to my CS 499 professor, Mr. Satish Penmatsa. I express my deepest gratitude for your thoughtful feedback on assignments and ultimately helping me reach the finish line. Great professors stick with us for a lifetime.
+
+<i>And where would I be if I didn't extend my thanks to Cannoli the Cat, also known by the names of many other Italian foods depending on mood and time of day, without whose ability to bundle his fluffiness into an even smaller bundle of fluffiness, none of this would be possible. We made it to the end, Linguini!</i>
+
+<img src="assets/img/cannoli.png" alt="Cannoli" width="300">
+
+<sub>[Take me to the top](#cs-499-capstone-eportfolio)</sub>
+
+- ---
+
+<sub>© 2026 Arielle Moore. All rights reserved. | CS 499: Computer Science Capstone | View my [portfolio](https://aricmoore.github.io/) for more projects.</sub>
