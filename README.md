@@ -72,7 +72,7 @@ Improved database performance and organization.
 ---
 
 ## Acknowledgements
-Firstly, a huge thank you to my CS 499 professor, Mr. Satish Penmatsa. I express my deepest gratitude for your thoughtful feedback on assignments and ultimately helping me reach the finish line. Great professors stick with us for a lifetime.
+First and foremost, I extend my heartfelt gratitude to my CS 499 professor, Mr. Satish Penmatsa. Your insightful feedback on assignments and steadfast guidance have been instrumental in helping me reach the finish line. Exceptional professors stick with us for a lifetime.
 
 <i>And where would I be if I didn't extend my thanks to Cannoli the Cat, also known by the names of many other Italian foods depending on mood and time of day, without whose ability to bundle his fluffiness into an even smaller bundle of fluffiness, none of this would be possible. We made it to the end, Linguini!</i>
 
