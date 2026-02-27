@@ -4,7 +4,7 @@ Arielle Moore
 <br>
 Bachelor of Science in Computer Science
 <br>
-Southern Hew Hampshire University
+Southern New Hampshire University
 
 ---
 
