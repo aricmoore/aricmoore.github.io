@@ -68,7 +68,7 @@
         {% when "linkedin" %}
           {% assign url = "https://www.linkedin.com/in/ariellemoore/" %}
         {% when "email" %}
-          {% assign url = "mailto:ari.moore.rl@gmail.com" %}
+          {% assign url = "mailto:arielle.moore@mailbox.org" %}
       {% endcase %}
       <a href="{{ url }}" aria-label="{{ type }}" {% unless type == "email" %}target="_blank" rel="noopener noreferrer"{% endunless %}>
         {% if type == "github" %}<i class="fab fa-github"></i>{% endif %}

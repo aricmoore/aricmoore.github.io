@@ -65,7 +65,7 @@ Improved database performance and organization.
 ## Contact
 - [GitHub](https://github.com/aricmoore)
 - [LinkedIn](https://www.linkedin.com/in/ariellemoore/)
-- [Email](mailto:ari.moore.rl@gmail.com)
+- [Email](mailto:arielle.moore@mailbox.org)
 
 <sub>[Take me to the top](#cs-499-capstone-eportfolio)</sub>
 
