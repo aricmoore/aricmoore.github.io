@@ -116,6 +116,6 @@ permalink: /resume/
 
 </div>
 
-<div style="text-align:center; margin-bottom:0.5rem;">
+<!-- <div style="text-align:center; margin-bottom:0.5rem;">
 	<sub style="margin:0.25rem 0 0 0; font-weight:300; "><em>© 2026 Arielle Moore. All rights reserved.</em></sub>
-</div>
+</div> -->
