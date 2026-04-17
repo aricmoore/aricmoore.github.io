@@ -1,6 +1,6 @@
 ---
 layout: page
-permalink: /
+permalink: /artifacts-portfolio/
 icon: fas fa-home
 order: 1
 ---
@@ -54,15 +54,15 @@ order: 1
 }
 </style>
 
-# Welcome to My ePortfolio!
+# CS Capstone Throwback
 
 ---
 
-## About Me {#self-assessment}
+## Forward {#self-assessment}
 
-<p style="text-indent: 2em;">
+<!-- <p style="text-indent: 2em;">
 	 While it is true that I already had nearly five years of professional experience prior to concluding my Bachelor of Science in Computer Science, I was still eager to deepen my theoretical foundation and to formalize the core principles that define strong software engineering. What I didn't anticipate was the extent to which the program would sharpen not only my technical skills, but also my discipline, judgement, and overall approach as an engineer.
-</p>
+</p> -->
 
 <p style="text-indent: 2em;">
 	Collaboration has been integral to my development throughout both my academic and professional careers. In the software industry, I work closely with product managers, QA analysts, designers, and fellow developers to translate stakeholder requirements into systems that are both reliable and scalable. My CS program has sharpened my ability to articulate technical decisions with clarity and precision, whether through formal documentation, code reviews, testing rationale, or architectural discussion. It has also underscored the necessity of designing systems that are not merely functional, but maintainable and extensible over time. Concepts such as data structures, algorithmic efficiency, relational database design, and secure development practices were not simply abstract academic exercises; in concert, they directly impacted the way I evaluate trade-offs within real-world systems. This focus also ensures my ability to design systems resilient to common vulnerabilities and compliant with organizational security policies while encouraging responsible practices within my development team.

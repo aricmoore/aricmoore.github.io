@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Mobile Portfolio
-permalink: /mobile/
+permalink: /
 ---
 
 <style>
@@ -18,7 +18,7 @@ permalink: /mobile/
 
 <div class="title-header">
   <h2 style="margin:1rem 0 0 0; line-height:1.5; font-weight:300; padding-bottom:0.5rem; border-bottom:1px solid #3e3939; margin-bottom:1.5rem;">
-    Software Application Developer
+    Software Developer
   </h2>
 </div>
 
@@ -50,7 +50,7 @@ permalink: /mobile/
 
   <div class="artifact-card" style="border:1px solid #ddd; border-radius:8px; padding:1rem; width:100%;">
     <h3 style="line-height:1.5; font-weight:300; margin:0 0 0.25rem 0;">
-      <a href="{{ '/' | relative_url }}">ePortfolio →</a>
+      <a href="/artifacts-portfolio/">Artifacts Portfolio →</a>
     </h3>
     <p style="margin:0; font-size:0.85rem; opacity:0.6;">CS capstone · Backend code artifact enhancements</p>
   </div>

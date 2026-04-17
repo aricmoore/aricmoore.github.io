@@ -1,16 +1,26 @@
 <!-- The Side Bar -->
-<aside aria-label="Sidebar" id="sidebar" class="d-flex flex-column align-items-end">
+<aside
+  aria-label="Sidebar"
+  id="sidebar"
+  class="d-flex flex-column align-items-end"
+>
   <header class="profile-wrapper">
     <a href="{{ '/' | relative_url }}" id="avatar" class="rounded-circle">
-      {%- if site.avatar != empty and site.avatar -%}
-        {%- capture avatar_url -%}
-          {% include media-url.html src=site.avatar %}
-        {%- endcapture -%}
-        <img src="{{- avatar_url -}}" width="112" height="112" alt="avatar" onerror="this.style.display='none'">
+      {%- if site.avatar != empty and site.avatar -%} {%- capture avatar_url -%}
+      {% include media-url.html src=site.avatar %} {%- endcapture -%}
+      <img
+        src="{{- avatar_url -}}"
+        width="112"
+        height="112"
+        alt="avatar"
+        onerror="this.style.display = 'none'"
+      />
       {%- endif -%}
     </a>
 
-    <a class="site-title d-block" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+    <a class="site-title d-block" href="{{ '/' | relative_url }}"
+      >{{ site.title }}</a
+    >
     <p class="site-subtitle fst-italic mb-0">{{ site.tagline }}</p>
   </header>
 
@@ -25,56 +35,84 @@
       </li>
 
       <!-- Self-Assessment -->
-      <li class="nav-item{% if page.url == '/#self-assessment' %} active{% endif %}">
-        <a href="{{ '/#self-assessment' | relative_url }}" class="nav-link">
+      <li class="nav-item">
+        <a
+          href="{{ '/artifacts-portfolio/#self-assessment' | relative_url }}"
+          class="nav-link"
+        >
           <i class="fa-fw fas fa-user-check"></i>
           <span>ABOUT ME</span>
         </a>
       </li>
 
-      <!-- Code Review  -->
-      <li class="nav-item{% if page.url == '/#code-review' %} active{% endif %}">
-        <a href="{{ '/#code-review' | relative_url }}" class="nav-link">
+      <!-- Code Review -->
+      <li class="nav-item">
+        <a
+          href="{{ '/artifacts-portfolio/#code-review' | relative_url }}"
+          class="nav-link"
+        >
           <i class="fa-fw fas fa-code"></i>
           <span>CODE REVIEW</span>
         </a>
       </li>
 
       <!-- Artifact Enhancements -->
-      <li class="nav-item{% if page.url == '/#artifact-enhancements' %} active{% endif %}">
-        <a href="{{ '/#artifact-enhancements' | relative_url }}" class="nav-link">
+      <li class="nav-item">
+        <a
+          href="{{ '/artifacts-portfolio/#artifact-enhancements' | relative_url }}"
+          class="nav-link"
+        >
           <i class="fa-fw fas fa-cubes"></i>
           <span>ARTIFACT ENHANCEMENTS</span>
+        </a>
+      </li>
+
+      <!-- Resume -->
+      <li class="nav-item">
+        <a href="{{ '/resume/' | relative_url }}" class="nav-link">
+          <i class="fa-fw fas fa-file-alt"></i>
+          <span>RÉSUMÉ</span>
         </a>
       </li>
     </ul>
   </nav>
 
-<div class="sidebar-bottom d-flex flex-wrap align-items-center w-100">
+  <div class="sidebar-bottom d-flex flex-wrap align-items-center w-100">
     {% unless site.theme_mode %}
-      <button type="button" class="btn btn-link nav-link" aria-label="Switch Mode" id="mode-toggle">
-        <i class="fas fa-adjust"></i>
-      </button>
-      <span class="icon-border"></span>
+    <button
+      type="button"
+      class="btn btn-link nav-link"
+      aria-label="Switch Mode"
+      id="mode-toggle"
+    >
+      <i class="fas fa-adjust"></i>
+    </button>
+    <span class="icon-border"></span>
     {% endunless %}
 
     <!-- Hard-coded GitHub, LinkedIn, Email links -->
-    {% assign links = "github,linkedin,email" | split: "," %}
-    {% for type in links %}
-      {% assign url = "" %}
-      {% case type %}
-        {% when "github" %}
-          {% assign url = "https://github.com/aricmoore" %}
-        {% when "linkedin" %}
-          {% assign url = "https://www.linkedin.com/in/ariellemoore/" %}
-        {% when "email" %}
-          {% assign url = "mailto:arielle.moore@mailbox.org" %}
-      {% endcase %}
-      <a href="{{ url }}" aria-label="{{ type }}" {% unless type == "email" %}target="_blank" rel="noopener noreferrer"{% endunless %}>
-        {% if type == "github" %}<i class="fab fa-github"></i>{% endif %}
-        {% if type == "linkedin" %}<i class="fab fa-linkedin"></i>{% endif %}
-        {% if type == "email" %}<i class="fas fa-envelope"></i>{% endif %}
-      </a>
+    {% assign links = "github,linkedin,email" | split: "," %} {% for type in
+    links %} {% assign url = "" %} {% case type %} {% when "github" %} {% assign
+    url = "https://github.com/aricmoore" %} {% when "linkedin" %} {% assign url
+    = "https://www.linkedin.com/in/ariellemoore/" %} {% when "email" %} {%
+    assign url = "mailto:arielle.moore@mailbox.org" %} {% endcase %}
+    <a
+      href="{{ url }}"
+      aria-label="{{ type }}"
+      {%
+      if
+      type
+      !="email"
+      %}target="_blank"
+      rel="noopener noreferrer"
+      {%
+      endif
+      %}
+    >
+      {% if type == "github" %}<i class="fab fa-github"></i>{% endif %} {% if
+      type == "linkedin" %}<i class="fab fa-linkedin"></i>{% endif %} {% if type
+      == "email" %}<i class="fas fa-envelope"></i>{% endif %}
+    </a>
     {% endfor %}
   </div>
 </aside>
