@@ -104,7 +104,6 @@ permalink: /resume/
       <li style="margin:0 0 0.25rem 1.25rem;">Researched, evaluated, and integrated AI tools to architect a recruiting pipeline for outbound candidate sourcing, reducing manual sourcing effort and improving targeting precision.</li>
       <li style="margin:0 0 0.25rem 1.25rem;">Designed and built Apogee Review (apogeereview.com), a Next.js and Sanity-powered editorial publication with a full custom design system, CMS-controlled content, and webhook-driven cache revalidation, enabling editors to publish and feature stories without touching code.</li>
       <li style="margin:0 0 0.25rem 1.25rem;">Developed Launch Atlas, a standalone React/D3.js data visualization dashboard tracking global satellite launch activity via live API data, featuring an animated bar chart race and interactive trend charts.</li>
-      <li style="margin:0 0 0.25rem 1.25rem;">PLACEHOLDER</li>
     </div>
   </div>
 
