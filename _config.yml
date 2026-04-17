@@ -35,7 +35,7 @@ social:
   name: Arielle Moore
   email: arielle.moore@mailbox.org
   links:
-    # The first element serves as the copyright owner's link 
+    # The first element serves as the copyright owner's link
     - https://twitter.com/username # change to your Twitter homepage
     - https://github.com/username # change to your GitHub homepage
     # Uncomment below to add more social links
@@ -149,6 +149,9 @@ pwa:
 
 # The base URL of your site
 baseurl: ""
+
+plugins:
+  - jekyll-redirect-from
 
 # ------------ The following options are not recommended to be modified ------------------
 
