@@ -8,6 +8,7 @@ Gemfile.lock
 .jekyll-metadata
 _site
 index.html
+!mobile/index.html
 
 # RubyGems
 *.gem
